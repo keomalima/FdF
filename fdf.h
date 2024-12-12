@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/12 14:24:52 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:55:50 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 typedef struct s_pixel
 {
-	int	z;
+	double	z;
+	double	x;
+	int		y;
 	int	color;
 }		t_pixel;
 
@@ -29,6 +31,6 @@ typedef struct s_pixel
 # include <mlx.h>
 
 int	get_row_col_len(char *file_name, int *col_len, int *row_len);
-int	ft_grid_allocate(int fd, t_pixel ***grid, int col_len, int row_len);
+int	grid_parse(char *file_name, t_pixel ***grid, int *y_len);
 
 #endif

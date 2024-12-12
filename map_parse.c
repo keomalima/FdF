@@ -6,11 +6,24 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/12 14:10:57 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:06:52 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void iso_trans(t_pixel *pixel, int y, int x, int z)
+{
+	//double ANGLE = 0.52359877559;  // 30 degrees in radians
+	float a;
+	(void)pixel;
+	(void)x;
+	(void)y;
+	(void)z;
+
+	a = (float)(cos(0.52359877559) * 0) + (cos(0.52359877559 + 2) * 0) + (cos(0.52359877559 - 2) * 1);
+	ft_printf("Float %i %i\n", a);
+}
 
 int	hex_to_int(char *hex)
 {
@@ -39,7 +52,7 @@ int	hex_to_int(char *hex)
 	return (color);
 }
 
-void	populate_pixel_data(t_pixel **grid, char **tab)
+void	populate_pixel_data(t_pixel **grid, char **tab, int index)
 {
 	char	*pixel;
 	int		i;
@@ -47,11 +60,13 @@ void	populate_pixel_data(t_pixel **grid, char **tab)
 
 	j = 0;
 	i = 0;
+	(void)index;
 	while (tab[i])
 	{
 		if (ft_isdigit(tab[i][0]) || tab[i][0] == '-')
 		{
 			(*grid)[j].z = ft_atoi(tab[i]);
+			iso_trans(&(*grid)[j], index, j, ft_atoi(tab[i]));
 			pixel = ft_strchr(tab[i], ',');
 			if (pixel)
 				(*grid)[j].color = hex_to_int(pixel);
@@ -85,7 +100,7 @@ int	pixel_parse(t_pixel ***grid, int fd)
 			free(*grid);
 			return (1);
 		}
-		populate_pixel_data(&(*grid)[i], tab);
+		populate_pixel_data(&(*grid)[i], tab, i);
 		free(tab);
 		i++;
 	}
@@ -115,5 +130,26 @@ int	ft_grid_allocate(int fd, t_pixel ***grid, int x_len, int y_len)
 	(*grid)[x_len] = NULL;
 	if (pixel_parse(grid, fd) == 1)
 		return (1);
+	return (0);
+}
+
+int	grid_parse(char *file_name, t_pixel ***grid, int *y_len)
+{
+	int	x_len;
+	int	fd;
+
+	if (get_row_col_len(file_name, &x_len, y_len) == 1)
+		return (1);
+	if (*y_len == 0 || x_len == 0)
+		return (1);
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	if (ft_grid_allocate(fd, grid, x_len, *y_len) == 1)
+	{
+		close (fd);
+		return (1);
+	}
+	close(fd);
 	return (0);
 }
