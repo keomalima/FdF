@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:52:18 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 14:41:44 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:02:17 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,18 @@ int	ft_fdf(char *file_name)
 	grid = NULL;
 	if (grid_parse(file_name, &grid, &viewport) == 1)
 		return (1);
+	/* int	y = 0;
+	while (grid[y])
+	{
+		int	x = 0;
+		while (viewport.grid_x_len > x)
+		{
+			printf("(%d, %d) ", grid[y][x].y, grid[y][x].x);
+			x++;
+		}
+		printf("\n");
+		y++;
+	} */
 	minilibx_init(&viewport);
 	i = 0;
 	while (grid[i])

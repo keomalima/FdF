@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 13:58:12 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/02 09:42:37 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 15:27:24 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,3 @@ int	ft_printf(const char *format, ...)
 	va_end(args);
 	return (len);
 }
-
-//# include <stdio.h>
-// int	main(void)
-// {
-// 	printf("return = %d", ft_printf("hello %h coucou %h"));
-// 	printf("\n\n");
-// 	printf("return = %d", printf("hello %h coucou %h"));
-// }

@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 14:38:45 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:23:16 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	my_mlx_pixel_put(t_img_info *viewport, int x, int y, int color)
 
 	if (!color)
 		color = 0xFF0000;
-	printf("%d, %d\n", y, x);
 	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
 	{
+		//printf("(%d, %d) ", y, x);
 		dst = viewport->img.addr + (y * viewport->img.line_length
 				+ x * (viewport->img.bits_per_pixel / 8));
 		*(unsigned int*)dst = color;
@@ -78,11 +78,11 @@ void	slope_decide(t_img_info *viewport, t_pixel init, t_pixel end)
 
 	dx = end.x - init.x;
 	dy = end.y - init.y;
-	printf("%d\n", init.x);
 	if (abs(dx) > abs(dy))
 		slope_less_than_one(viewport, dx, dy, init);
 	else
 		slope_bigger_than_one(viewport, dx, dy, init);
+	printf("\n");
 }
 
 void	create_image(t_img_info *viewport)
@@ -94,6 +94,8 @@ void	create_image(t_img_info *viewport)
 		return ;
 	y = 0;
 	find_img_dimensions(viewport);
+	printf("%d\n", viewport->scale_factor);
+	convert_iso(viewport);
 	while (viewport->grid[y])
 	{
 		x = 0;
