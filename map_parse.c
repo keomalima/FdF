@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 09:08:02 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:07:13 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,8 @@
 
 void	iso_trans(t_pixel *pixel, int y, int x, int z)
 {
-	pixel->x = round((x * cos(ANGLE) + y * cos(ANGLE + 2) + z * cos(ANGLE - 2)) * 25);
-	pixel->y = round((x * sin(ANGLE) + y * sin(ANGLE + 2) + z * sin(ANGLE - 2)) * 25);
-}
-
-int	hex_to_int(char *hex)
-{
-	int		i;
-	int		j;
-	int		color;
-	char	*hex_base;
-
-	hex_base = "0123456789ABCDEF";
-	color = 0;
-	if (!hex || ft_strlen(hex) < 3)
-		return (0);
-	i = 3;
-	while (hex[i])
-	{
-		if (hex[i] >= 'a' && hex[i] <= 'f')
-			hex[i] = ft_toupper(hex[i]);
-		j = 0;
-		while (hex_base[j] && hex[i] != hex_base[j])
-			j++;
-		if (!hex_base[j])
-			return (0);
-		color = color * 16 + j;
-		i++;
-	}
-	return (color);
+	pixel->x = (x * cos(ANGLE) + y * cos(ANGLE + 2) + z * cos(ANGLE - 2));
+	pixel->y = (x * sin(ANGLE) + y * sin(ANGLE + 2) + z * sin(ANGLE - 2));
 }
 
 void	x_parse(t_pixel **grid, char **tab, int y)
@@ -125,23 +98,27 @@ int	ft_grid_allocate(int fd, t_pixel ***grid, int x_len, int y_len)
 	return (0);
 }
 
-int	grid_parse(char *file_name, t_pixel ***grid, int *x_len)
+int	grid_parse(char *file_name, t_pixel ***grid, t_img_info *viewport)
 {
 	int	y_len;
+	int	x_len;
 	int	fd;
 
-	if (get_row_col_len(file_name, x_len, &y_len) == 1)
+	if (get_row_col_len(file_name, &x_len, &y_len) == 1)
 		return (1);
-	if (y_len == 0 || *x_len == 0)
+	if (y_len == 0 || x_len == 0)
 		return (1);
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 		return (1);
-	if (ft_grid_allocate(fd, grid, *x_len, y_len) == 1)
+	if (ft_grid_allocate(fd, grid, x_len, y_len) == 1)
 	{
 		close (fd);
 		return (1);
 	}
 	close(fd);
+	viewport->grid_x_len = x_len;
+	viewport->grid_y_len = y_len;
+	viewport->grid = (*grid);
 	return (0);
 }

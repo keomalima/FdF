@@ -6,29 +6,37 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 09:17:12 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:38:45 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_img_info *viewport, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	if (!color)
+		color = 0xFF0000;
+	printf("%d, %d\n", y, x);
+	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
+	{
+		dst = viewport->img.addr + (y * viewport->img.line_length
+				+ x * (viewport->img.bits_per_pixel / 8));
+		*(unsigned int*)dst = color;
+	}
 }
 
-void slope_bigger_than_one(t_data *img, int dx, int dy, t_pixel init)
+void	slope_bigger_than_one(t_img_info *viewport, int dx, int dy, t_pixel init)
 {
 	int	i;
 	int	p;
 
 	p = 2 * abs(dx) - abs(dy);
 	i = 0;
-	while (abs(dy) > i)
+	while (abs(dy) >= i)
 	{
+		my_mlx_pixel_put(viewport, init.x, init.y, init.color);
 		init.y += (dy > 0) ? 1 : -1;
 		if (p < 0)
 			p = p + 2 * abs(dx);
@@ -37,20 +45,20 @@ void slope_bigger_than_one(t_data *img, int dx, int dy, t_pixel init)
 			init.x += (dx > 0) ? 1 : -1;
 			p = p + 2 * abs(dx) - 2 * abs(dy);
 		}
-		my_mlx_pixel_put(img, init.x, init.y, 0xFF0000);
 		i++;
 	}
 }
 
-void slope_less_than_one(t_data *img, int dx, int dy, t_pixel init)
+void	slope_less_than_one(t_img_info *viewport, int dx, int dy, t_pixel init)
 {
 	int	i;
 	int	p;
 
 	p = 2 * abs(dy) - abs(dx);
 	i = 0;
-	while (abs(dx) > i)
+	while (abs(dx) >= i)
 	{
+		my_mlx_pixel_put(viewport, init.x, init.y, init.color);
 		if (p < 0)
 			p = p + 2 * abs(dy);
 		else
@@ -59,44 +67,45 @@ void slope_less_than_one(t_data *img, int dx, int dy, t_pixel init)
 			p = p + 2 * abs(dy) - 2 * abs(dx);
 		}
 		init.x += (dx > 0) ? 1 : -1;
-		my_mlx_pixel_put(img, init.x, init.y, 0xFF0000);
 		i++;
 	}
 }
 
-void	slope_decide(t_data *img, t_pixel init, t_pixel end)
+void	slope_decide(t_img_info *viewport, t_pixel init, t_pixel end)
 {
 	int	dx;
 	int	dy;
 
-	dx =  end.x - init.x;
+	dx = end.x - init.x;
 	dy = end.y - init.y;
+	printf("%d\n", init.x);
 	if (abs(dx) > abs(dy))
-		slope_less_than_one(img, dx, dy, init);
+		slope_less_than_one(viewport, dx, dy, init);
 	else
-		slope_bigger_than_one(img, dx, dy, init);
+		slope_bigger_than_one(viewport, dx, dy, init);
 }
 
-void	create_image(t_data *img, t_pixel **grid, int x_len)
+void	create_image(t_img_info *viewport)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
-	if (!grid || x_len <= 0)
-		return;
+	if (!viewport->grid)
+		return ;
 	y = 0;
-	while (grid[y])
+	find_img_dimensions(viewport);
+	while (viewport->grid[y])
 	{
 		x = 0;
-		while (x_len - 1 > x)
+		while (viewport->grid_x_len - 1 > x)
 		{
-			slope_decide(img, grid[y][x], grid[y][x + 1]);
-			if (grid[y + 1])
-				slope_decide(img, grid[y][x], grid[y + 1][x]);
+			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y][x + 1]);
+			if (viewport->grid[y + 1])
+				slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 			x++;
 		}
-		if (grid[y + 1])
-			slope_decide(img, grid[y][x], grid[y + 1][x]);
+		if (viewport->grid[y + 1])
+			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 		y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 09:17:23 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 14:22:37 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # define ANGLE 0.52359
 # define WIDTH 1920
 # define HEIGHT 1080
-#define OFFSET 900
+# define OFFSET 100
+# define SCALE 10
 
 typedef struct s_pixel
 {
@@ -34,6 +35,20 @@ typedef struct	s_data {
 	int		endian;
 }				t_data;
 
+typedef struct	s_img_info {
+	int		offset_x;
+	int		offset_y;
+	int		scale_factor;
+	int		img_width;
+	int		img_height;
+	int		grid_x_len;
+	int		grid_y_len;
+	void	*win;
+	void	*mlx;
+	t_data	img;
+	t_pixel	**grid;
+}				t_img_info;
+
 # include <stdlib.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -45,7 +60,9 @@ typedef struct	s_data {
 # include <mlx.h>
 
 int		get_row_col_len(char *file_name, int *col_len, int *row_len);
-int		grid_parse(char *file_name, t_pixel ***grid, int *y_len);
-void	create_image(t_data *img, t_pixel **grid, int x_len);
+int		grid_parse(char *file_name, t_pixel ***grid, t_img_info *viewport);
+void	create_image(t_img_info *viewport);
+int		hex_to_int(char *hex);
+void	find_img_dimensions(t_img_info *viewport);
 
 #endif

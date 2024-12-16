@@ -6,11 +6,38 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:20:49 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/12 12:50:24 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 09:20:49 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	hex_to_int(char *hex)
+{
+	int		i;
+	int		j;
+	int		color;
+	char	*hex_base;
+
+	hex_base = "0123456789ABCDEF";
+	color = 0;
+	if (!hex || ft_strlen(hex) < 3)
+		return (0);
+	i = 3;
+	while (hex[i])
+	{
+		if (hex[i] >= 'a' && hex[i] <= 'f')
+			hex[i] = ft_toupper(hex[i]);
+		j = 0;
+		while (hex_base[j] && hex[i] != hex_base[j])
+			j++;
+		if (!hex_base[j])
+			return (0);
+		color = color * 16 + j;
+		i++;
+	}
+	return (color);
+}
 
 int	map_x_len(char *read, int *x_len)
 {
