@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 17:16:41 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 22:11:16 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 #define FDF_H
 
 # define ANGLE 0.52359
-# define WIDTH 1800
-# define HEIGHT 1500
+# define WIDTH 500
+# define HEIGHT 500
 
 typedef struct s_pixel
 {
-	int	z;
-	int	x;
-	int	y;
+	int		z;
+	float	x;
+	float	y;
 	int	color;
 }		t_pixel;
 
@@ -36,11 +36,15 @@ typedef struct	s_data {
 typedef struct	s_img_info {
 	int		offset_x;
 	int		offset_y;
-	int	scale_factor;
+	int		scale_factor;
 	int		img_width;
 	int		img_height;
 	int		grid_x_len;
 	int		grid_y_len;
+	int		max_z;
+	int		min_z;
+	int		min_y;
+	int		min_x;
 	void	*win;
 	void	*mlx;
 	t_data	img;
@@ -62,6 +66,6 @@ int		grid_parse(char *file_name, t_pixel ***grid, t_img_info *viewport);
 void	create_image(t_img_info *viewport);
 int		hex_to_int(char *hex);
 void	find_img_dimensions(t_img_info *viewport);
-void	convert_iso(t_img_info *viewport);
+void	iso_convertion(t_img_info *viewport);
 
 #endif

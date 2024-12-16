@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 17:23:16 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/16 21:50:50 by keomalima        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	my_mlx_pixel_put(t_img_info *viewport, int x, int y, int color)
 	char	*dst;
 
 	if (!color)
-		color = 0xFF0000;
+		color = 0xFFFFFF;
 	if (x >= 0 && y >= 0 && x < WIDTH && y < HEIGHT)
 	{
-		//printf("(%d, %d) ", y, x);
 		dst = viewport->img.addr + (y * viewport->img.line_length
 				+ x * (viewport->img.bits_per_pixel / 8));
 		*(unsigned int*)dst = color;
@@ -76,13 +75,16 @@ void	slope_decide(t_img_info *viewport, t_pixel init, t_pixel end)
 	int	dx;
 	int	dy;
 
+	init.x = (init.x * viewport->scale_factor) + viewport->offset_x;
+	init.y = (init.y * viewport->scale_factor) + viewport->offset_y;
+	end.x = (end.x * viewport->scale_factor) + viewport->offset_x;
+	end.y = (end.y * viewport->scale_factor) + viewport->offset_y;
 	dx = end.x - init.x;
 	dy = end.y - init.y;
 	if (abs(dx) > abs(dy))
 		slope_less_than_one(viewport, dx, dy, init);
 	else
 		slope_bigger_than_one(viewport, dx, dy, init);
-	printf("\n");
 }
 
 void	create_image(t_img_info *viewport)
@@ -94,8 +96,6 @@ void	create_image(t_img_info *viewport)
 		return ;
 	y = 0;
 	find_img_dimensions(viewport);
-	printf("%d\n", viewport->scale_factor);
-	convert_iso(viewport);
 	while (viewport->grid[y])
 	{
 		x = 0;
