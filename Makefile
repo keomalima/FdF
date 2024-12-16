@@ -6,14 +6,14 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 10:06:37 by kricci-d          #+#    #+#              #
-#    Updated: 2024/12/12 12:22:46 by kricci-d         ###   ########.fr        #
+#    Updated: 2024/12/16 09:16:26 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = fdf.c map_parse.c map_len.c
+SRCS = fdf.c map_parse.c map_len.c image_parse.c
 OBJS = $(SRCS:.c=.o)
 
 MLX_DIR = ./mlx_linux
@@ -31,7 +31,7 @@ $(NAME): $(OBJS)
 
 all: $(NAME)
 
-%.o: %.c Makefile
+%.o: %.c Makefile fdf.h
 	$(CC) $(CFLAGS) -I . -I $(MLX_DIR) -c $< -o $@
 
 clean:
