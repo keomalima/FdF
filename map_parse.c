@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/17 13:44:43 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:30:09 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	x_parse(t_pixel **grid, char **tab)
 	i = 0;
 	while (tab[i])
 	{
+		(*grid)[x].active = 0;
 		if (ft_isdigit(tab[i][0]) || tab[i][0] == '-')
 		{
 			(*grid)[x].z = ft_atoi(tab[i]);

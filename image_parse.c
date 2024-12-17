@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/17 13:42:09 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/17 17:48:33 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ void	create_image(t_img_info *viewport)
 	while (viewport->grid[y])
 	{
 		x = 0;
-		while (viewport->grid_x_len - 1 > x && viewport->grid[y][x + 1].active)
+		while (viewport->grid_x_len - 1 > x && viewport->grid[y][x + 1].active > 0)
 		{
 			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y][x + 1]);
 			if (viewport->grid[y + 1])
 				slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 			x++;
 		}
-		if (viewport->grid[y + 1] && viewport->grid[y + 1][x].active)
+		if (viewport->grid[y + 1] && viewport->grid[y + 1][x].active > 0)
 			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 		y++;
 	}
