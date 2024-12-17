@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 22:11:16 by keomalima        ###   ########.fr       */
+/*   Updated: 2024/12/17 13:44:12 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 #define FDF_H
 
 # define ANGLE 0.52359
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 1800
+# define HEIGHT 1500
 
 typedef struct s_pixel
 {
 	int		z;
 	float	x;
 	float	y;
-	int	color;
+	int		active;
+	int		color;
 }		t_pixel;
 
 typedef struct	s_data {
@@ -41,8 +42,6 @@ typedef struct	s_img_info {
 	int		img_height;
 	int		grid_x_len;
 	int		grid_y_len;
-	int		max_z;
-	int		min_z;
 	int		min_y;
 	int		min_x;
 	void	*win;

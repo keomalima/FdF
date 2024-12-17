@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scale_offset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:14:44 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 22:10:10 by keomalima        ###   ########.fr       */
+/*   Updated: 2024/12/17 12:47:57 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ void	scale_factor(t_img_info *viewport)
 	float	scale_y;
 	float	scale_factor;
 
-	scale_x = (0.9 * WIDTH) / viewport->img_width;
-	scale_y = (0.9 * HEIGHT) / viewport->img_height;
+	scale_x = (0.8 * WIDTH) / viewport->img_width;
+	scale_y = (0.8 * HEIGHT) / viewport->img_height;
+	//printf("Scale factor %f %f\n", scale_y, scale_x);
 	if (scale_x > scale_y)
 		scale_factor = scale_y;
 	else
 		scale_factor = scale_x;
 	viewport->scale_factor = scale_factor;
-	printf("Scale %f\n", scale_factor);
 	viewport->offset_x = (WIDTH - (viewport->img_width * scale_factor)) / 2 - (viewport->min_x * scale_factor);
 	viewport->offset_y = (HEIGHT - (viewport->img_height * scale_factor)) / 2 - (viewport->min_y * scale_factor);
+	//printf("Scale factor %d %d %d\n", scale_factor, viewport->offset_x, viewport->offset_y);
 }
 
 void	find_y_min_max(t_img_info *viewport)
@@ -54,7 +55,7 @@ void	find_y_min_max(t_img_info *viewport)
 		y++;
 	}
 	viewport->min_y = min_y;
-	viewport->img_height = abs(max_y - min_y);
+	viewport->img_height = max_y - min_y;
 }
 
 void	find_x_min_max(t_img_info *viewport)

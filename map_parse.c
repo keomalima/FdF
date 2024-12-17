@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 21:50:25 by keomalima        ###   ########.fr       */
+/*   Updated: 2024/12/17 13:44:43 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	x_parse(t_pixel **grid, char **tab, int y)
+void	x_parse(t_pixel **grid, char **tab)
 {
 	char	*pixel;
 	int		i;
 	int		x;
-	(void)y;
 
 	x = 0;
 	i = 0;
@@ -26,6 +25,7 @@ void	x_parse(t_pixel **grid, char **tab, int y)
 		if (ft_isdigit(tab[i][0]) || tab[i][0] == '-')
 		{
 			(*grid)[x].z = ft_atoi(tab[i]);
+			(*grid)[x].active = 1;
 			pixel = ft_strchr(tab[i], ',');
 			if (pixel)
 				(*grid)[x].color = hex_to_int(pixel);
@@ -59,7 +59,7 @@ int	y_parse(t_pixel **grid, int fd)
 			free(grid);
 			return (1);
 		}
-		x_parse(&grid[y], tab, y);
+		x_parse(&grid[y], tab);
 		free(tab);
 		y++;
 	}
@@ -113,7 +113,7 @@ int	grid_parse(char *file_name, t_pixel ***grid, t_img_info *viewport)
 	close(fd);
 	viewport->grid_x_len = x_len;
 	viewport->grid_y_len = y_len;
-	viewport->grid = (*grid);
+	viewport->grid = *grid;
 	iso_convertion(viewport);
 	return (0);
 }

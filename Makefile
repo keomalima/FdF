@@ -6,14 +6,14 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 10:06:37 by kricci-d          #+#    #+#              #
-#    Updated: 2024/12/16 11:32:40 by kricci-d         ###   ########.fr        #
+#    Updated: 2024/12/17 07:28:29 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra
-SRCS = fdf.c map_parse.c map_len.c image_parse.c scale_offset.c
+SRCS = fdf.c map_parse.c map_len.c image_parse.c scale_offset.c iso_convertion.c
 OBJS = $(SRCS:.c=.o)
 
 MLX_DIR = ./mlx_linux

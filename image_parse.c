@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 21:50:50 by keomalima        ###   ########.fr       */
+/*   Updated: 2024/12/17 13:42:09 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,20 @@ void	slope_bigger_than_one(t_img_info *viewport, int dx, int dy, t_pixel init)
 	while (abs(dy) >= i)
 	{
 		my_mlx_pixel_put(viewport, init.x, init.y, init.color);
-		init.y += (dy > 0) ? 1 : -1;
 		if (p < 0)
 			p = p + 2 * abs(dx);
 		else
 		{
-			init.x += (dx > 0) ? 1 : -1;
+			if (dx > 0)
+				init.x += 1;
+			else
+				init.x += -1;
 			p = p + 2 * abs(dx) - 2 * abs(dy);
 		}
+		if (dy > 0)
+			init.y += 1;
+		else
+			init.y += -1;
 		i++;
 	}
 }
@@ -62,10 +68,16 @@ void	slope_less_than_one(t_img_info *viewport, int dx, int dy, t_pixel init)
 			p = p + 2 * abs(dy);
 		else
 		{
-			init.y += (dy > 0) ? 1 : -1;
+			if (dy > 0)
+				init.y += 1;
+			else
+				init.y += -1;
 			p = p + 2 * abs(dy) - 2 * abs(dx);
 		}
-		init.x += (dx > 0) ? 1 : -1;
+		if (dx > 0)
+			init.x += 1;
+		else
+			init.x += -1;
 		i++;
 	}
 }
@@ -99,14 +111,14 @@ void	create_image(t_img_info *viewport)
 	while (viewport->grid[y])
 	{
 		x = 0;
-		while (viewport->grid_x_len - 1 > x)
+		while (viewport->grid_x_len - 1 > x && viewport->grid[y][x + 1].active)
 		{
 			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y][x + 1]);
 			if (viewport->grid[y + 1])
 				slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 			x++;
 		}
-		if (viewport->grid[y + 1])
+		if (viewport->grid[y + 1] && viewport->grid[y + 1][x].active)
 			slope_decide(viewport, viewport->grid[y][x], viewport->grid[y + 1][x]);
 		y++;
 	}

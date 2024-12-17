@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keomalima <keomalima@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:52:18 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 19:45:03 by keomalima        ###   ########.fr       */
+/*   Updated: 2024/12/17 13:39:55 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	minilibx_init(t_img_info *viewport)
+int	minilibx_config(t_img_info *viewport)
 {
 	void	*mlx;
 	void	*win;
@@ -43,19 +43,7 @@ int	ft_fdf(char *file_name)
 	grid = NULL;
 	if (grid_parse(file_name, &grid, &viewport) == 1)
 		return (1);
-	/* int	y = 0;
-	while (grid[y])
-	{
-		int	x = 0;
-		while (viewport.grid_x_len > x)
-		{
-			printf("(%d, %d) ", grid[y][x].y, grid[y][x].x);
-			x++;
-		}
-		printf("\n");
-		y++;
-	} */
-	minilibx_init(&viewport);
+	minilibx_config(&viewport);
 	i = 0;
 	while (grid[i])
 		free(grid[i++]);
