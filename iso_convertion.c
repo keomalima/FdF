@@ -6,13 +6,13 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 21:22:59 by keomalima         #+#    #+#             */
-/*   Updated: 2024/12/18 08:13:31 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 10:19:35 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void find_gap_vertical(t_img_info *viewport, int *gap, int *count)
+void	find_gap_vertical(t_img_info *viewport, int *gap, int *count)
 {
 	int	y;
 	int	x;
@@ -27,7 +27,8 @@ void find_gap_vertical(t_img_info *viewport, int *gap, int *count)
 			{
 				if (viewport->grid[y + 1][x].z != viewport->grid[y][x].z)
 				{
-					*gap += abs(viewport->grid[y + 1][x].z - viewport->grid[y][x].z);
+					*gap += abs(viewport->grid[y + 1][x].z
+							- viewport->grid[y][x].z);
 					(*count)++;
 				}
 			}
@@ -37,20 +38,22 @@ void find_gap_vertical(t_img_info *viewport, int *gap, int *count)
 	}
 }
 
-void find_gap_horizontal(t_img_info *viewport, int *gap, int *count)
+void	find_gap_horizontal(t_img_info *viewport, int *gap, int *count)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	while (viewport->grid[y])
 	{
 		x = 0;
-		while (viewport->grid_x_len - 1 > x && viewport->grid[y][x + 1].active > 0)
+		while (viewport->grid_x_len - 1 > x
+			&& viewport->grid[y][x + 1].active > 0)
 		{
 			if (viewport->grid[y][x + 1].z != viewport->grid[y][x].z)
 			{
-				*gap += abs(viewport->grid[y][x + 1].z - viewport->grid[y][x].z);
+				*gap += abs(viewport->grid[y][x + 1].z
+						- viewport->grid[y][x].z);
 				(*count)++;
 			}
 			x++;
@@ -65,9 +68,11 @@ void	iso_trans(t_img_info *viewport, int y, int x, int z_factor)
 
 	if (!z_factor)
 		z_factor = 1;
-	z = viewport->grid[y][x].z  / z_factor;
-	viewport->grid[y][x].x = (x * cos(ANGLE) + y * cos(ANGLE + 2) + z * cos(ANGLE - 2));
-	viewport->grid[y][x].y = (x * sin(ANGLE) + y * sin(ANGLE + 2) + z * sin(ANGLE - 2));
+	z = viewport->grid[y][x].z / z_factor;
+	viewport->grid[y][x].x = (x * cos(ANGLE)
+			+ y * cos(ANGLE + 2) + z * cos(ANGLE - 2));
+	viewport->grid[y][x].y = (x * sin(ANGLE)
+			+ y * sin(ANGLE + 2) + z * sin(ANGLE - 2));
 }
 
 void	iso_convertion(t_img_info *viewport)
@@ -85,7 +90,7 @@ void	iso_convertion(t_img_info *viewport)
 	find_gap_vertical(viewport, &gap, &count);
 	z_factor = 0;
 	if (count != 0 && gap != 0)
-		z_factor = gap/count;
+		z_factor = gap / count;
 	while (viewport->grid[y])
 	{
 		x = 0;
