@@ -6,7 +6,7 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/15 14:26:45 by keomalima         #+#    #+#              #
-#    Updated: 2024/12/11 10:06:21 by kricci-d         ###   ########.fr        #
+#    Updated: 2024/12/18 12:34:18 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ FUNCTIONS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isasci
 	ft_striteri.c ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_substr.c \
 	ft_strtrim.c ft_tolower.c ft_toupper.c ft_print_char.c ft_print_hex.c \
 	ft_print_int.c ft_print_ptr.c ft_printf.c get_next_line.c \
-	get_next_line_utils.c
+	get_next_line_utils.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+	ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 OBJS = $(FUNCTIONS:.c=.o)
 

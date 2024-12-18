@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:15:16 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 11:07:34 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:10:51 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	slope_decide(t_img_info *viewport, t_pixel init, t_pixel end)
 	init.x = (init.x * viewport->scale_factor) + viewport->offset_x
 		+ viewport->move_x;
 	init.y = (init.y * viewport->scale_factor) + viewport->offset_y
-		+ viewport->move_y;;
+		+ viewport->move_y;
 	end.x = (end.x * viewport->scale_factor) + viewport->offset_x
 		+ viewport->move_x;
 	end.y = (end.y * viewport->scale_factor) + viewport->offset_y

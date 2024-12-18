@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:20:49 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 07:54:25 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:11:14 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int	get_row_col_len(char *file_name, int *x_len, int *y_len)
 
 	*x_len = 0;
 	*y_len = 0;
+	if (!ft_strnstr(file_name, ".fdf", ft_strlen(file_name)))
+		return (1);
 	fd_map_len = open(file_name, O_RDONLY);
 	if (fd_map_len < 0)
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 10:57:16 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:12:14 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define HEIGHT 1500
 
 # include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <math.h>
@@ -30,7 +29,7 @@
 
 typedef struct s_pixel
 {
-	int		z;
+	float	z;
 	float	x;
 	float	y;
 	int		active;
@@ -48,17 +47,17 @@ typedef struct s_data
 
 typedef struct s_img_info
 {
-	int		offset_x;
-	int		offset_y;
+	float	offset_x;
+	float	offset_y;
 	float	scale_factor;
-	int		img_width;
-	int		img_height;
+	float	img_width;
+	float	img_height;
 	int		grid_x_len;
 	int		grid_y_len;
-	int		move_x;
-	int		move_y;
-	int		min_y;
-	int		min_x;
+	float	move_x;
+	float	move_y;
+	float	min_y;
+	float	min_x;
 	void	*win;
 	void	*mlx;
 	t_data	img;

@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 08:20:29 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 11:08:07 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:09:49 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	handle_close(t_img_info *viewport)
 	exit(0);
 	return (0);
 }
+
 int	key_press(int keycode, t_img_info *viewport)
 {
 	if (keycode == 65307)

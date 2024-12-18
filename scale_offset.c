@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:14:44 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 10:53:43 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 12:44:46 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,32 @@ void	scale_factor(t_img_info *viewport)
 
 	if (!viewport->scale_factor)
 	{
-		scale_x = (0.8 * WIDTH) / viewport->img_width;
-		scale_y = (0.8 * HEIGHT) / viewport->img_height;
+		scale_x = (0.9 * WIDTH) / viewport->img_width;
+		scale_y = (0.9 * HEIGHT) / viewport->img_height;
 		if (scale_x > scale_y)
 			scale_factor = scale_y;
 		else
 			scale_factor = scale_x;
 		viewport->scale_factor = scale_factor;
 	}
+	if (viewport->min_x > 0)
+		viewport->min_x = 0;
+	if (viewport->min_y > 0)
+		viewport->min_y = 0;
 	viewport->offset_x = (WIDTH - (viewport->img_width
-		* viewport->scale_factor)) / 2 - (viewport->min_x
-		* viewport->scale_factor);
+				* viewport->scale_factor)) / 2 - viewport->min_x
+		* viewport->scale_factor;
 	viewport->offset_y = (HEIGHT - (viewport->img_height
-		* viewport->scale_factor)) / 2 - (viewport->min_y
-		* viewport->scale_factor);
+				* viewport->scale_factor)) / 2 - viewport->min_y
+		* viewport->scale_factor;
 }
 
 void	find_y_min_max(t_img_info *viewport)
 {
-	int	y;
-	int	x;
-	int	max_y;
-	int	min_y;
+	int		y;
+	int		x;
+	float	max_y;
+	float	min_y;
 
 	y = 0;
 	max_y = INT_MIN;
@@ -65,10 +69,10 @@ void	find_y_min_max(t_img_info *viewport)
 
 void	find_x_min_max(t_img_info *viewport)
 {
-	int	y;
-	int	x;
-	int	max_x;
-	int	min_x;
+	int		y;
+	int		x;
+	float	max_x;
+	float	min_x;
 
 	y = 0;
 	max_x = INT_MIN;
