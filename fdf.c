@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:52:18 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/17 13:39:55 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 08:48:53 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	minilibx_config(t_img_info *viewport)
 	viewport->img = img;
 	create_image(viewport);
 	mlx_put_image_to_window(mlx, win, img.img, 0, 0);
+	mlx_hook(win, 17, 0, handle_close, viewport);
+	mlx_hook(win, 2, 1, close_press, viewport);
 	mlx_loop(mlx);
 	return (0);
 }

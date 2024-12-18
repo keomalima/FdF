@@ -6,13 +6,13 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/17 17:30:09 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 08:05:25 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	x_parse(t_pixel **grid, char **tab)
+void	x_parse(t_pixel **grid, char **tab, int x_len)
 {
 	char	*pixel;
 	int		i;
@@ -20,7 +20,7 @@ void	x_parse(t_pixel **grid, char **tab)
 
 	x = 0;
 	i = 0;
-	while (tab[i])
+	while (tab[i] && x_len > i)
 	{
 		(*grid)[x].active = 0;
 		if (ft_isdigit(tab[i][0]) || tab[i][0] == '-')
@@ -39,7 +39,7 @@ void	x_parse(t_pixel **grid, char **tab)
 	}
 }
 
-int	y_parse(t_pixel **grid, int fd)
+int	y_parse(t_pixel **grid, int fd, int x_len)
 {
 	int		y;
 	char	*line;
@@ -60,7 +60,7 @@ int	y_parse(t_pixel **grid, int fd)
 			free(grid);
 			return (1);
 		}
-		x_parse(&grid[y], tab);
+		x_parse(&grid[y], tab, x_len);
 		free(tab);
 		y++;
 	}
@@ -88,7 +88,7 @@ int	ft_grid_allocate(int fd, t_pixel ***grid, int x_len, int y_len)
 		y++;
 	}
 	(*grid)[y_len] = NULL;
-	if (y_parse(*grid, fd) == 1)
+	if (y_parse(*grid, fd, x_len) == 1)
 		return (1);
 	return (0);
 }

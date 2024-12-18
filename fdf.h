@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 10:11:28 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/17 17:11:15 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 08:49:07 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ void	create_image(t_img_info *viewport);
 int		hex_to_int(char *hex);
 void	find_img_dimensions(t_img_info *viewport);
 void	iso_convertion(t_img_info *viewport);
+int		close_press(int keycode, t_img_info *viewport);
+int		handle_close(t_img_info *viewport);
 
 #endif

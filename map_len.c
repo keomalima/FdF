@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:20:49 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/16 09:20:49 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 07:54:25 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ int	map_x_len(char *read, int *x_len)
 {
 	int		i;
 	char	**tab;
+	int		len;
 
+	len = 0;
 	if (read)
 	{
 		tab = ft_split(read, 32);
@@ -53,10 +55,12 @@ int	map_x_len(char *read, int *x_len)
 		while (tab[i])
 		{
 			if (ft_isdigit(tab[i][0]) || tab[i][0] == '-')
-				(*x_len)++;
+				len++;
 			free(tab[i]);
 			i++;
 		}
+		if (len > *x_len)
+			*x_len = len;
 		free(tab);
 	}
 	return (0);
@@ -68,13 +72,13 @@ int	map_y_len(int fd, int *x_len, int *y_len)
 	int		i;
 
 	read = get_next_line(fd);
-	if (map_x_len(read, x_len) == 1)
-	{
-		free(read);
-		return (1);
-	}
 	while (read)
 	{
+		if (map_x_len(read, x_len) == 1)
+		{
+			free(read);
+			return (1);
+		}
 		i = 0;
 		while (read[i])
 		{

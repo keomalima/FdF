@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 21:22:59 by keomalima         #+#    #+#             */
-/*   Updated: 2024/12/17 17:56:48 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/18 08:13:31 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,10 @@ void find_gap_horizontal(t_img_info *viewport, int *gap, int *count)
 void	iso_trans(t_img_info *viewport, int y, int x, int z_factor)
 {
 	float	z;
-	static	i;
 
-	if (viewport->grid[y][x].z == 0 || z_factor == 0)
-		z = viewport->grid[y][x].z;
-	else
-		z = viewport->grid[y][x].z  / z_factor;
+	if (!z_factor)
+		z_factor = 1;
+	z = viewport->grid[y][x].z  / z_factor;
 	viewport->grid[y][x].x = (x * cos(ANGLE) + y * cos(ANGLE + 2) + z * cos(ANGLE - 2));
 	viewport->grid[y][x].y = (x * sin(ANGLE) + y * sin(ANGLE + 2) + z * sin(ANGLE - 2));
 }
