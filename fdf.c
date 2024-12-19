@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 09:52:18 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 13:12:40 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:32:09 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int	create_image(t_img_info *viewport)
 	viewport->img = img;
 	draw_image(viewport);
 	mlx_put_image_to_window(viewport->mlx, viewport->win, img.img, 0, 0);
+	return (0);
 }
 
 int	minilibx_config(t_img_info *viewport)
 {
 	void	*mlx;
-	void	*win;
+	void	*win = NULL;
 
 	mlx = mlx_init();
 	if (!mlx)
@@ -42,7 +43,8 @@ int	minilibx_config(t_img_info *viewport)
 	viewport->move_x = 0;
 	viewport->move_y = 0;
 	viewport->scale_factor = 0;
-	create_image(viewport);
+	if (create_image(viewport) == 1)
+		return (1);
 	mlx_hook(win, 17, 0, handle_close, viewport);
 	mlx_hook(win, 2, 1, key_press, viewport);
 	mlx_loop(mlx);

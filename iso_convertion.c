@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 21:22:59 by keomalima         #+#    #+#             */
-/*   Updated: 2024/12/18 10:19:35 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:31:48 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	find_gap_vertical(t_img_info *viewport, int *gap, int *count)
 			{
 				if (viewport->grid[y + 1][x].z != viewport->grid[y][x].z)
 				{
-					*gap += abs(viewport->grid[y + 1][x].z
+					*gap += fabs(viewport->grid[y + 1][x].z
 							- viewport->grid[y][x].z);
 					(*count)++;
 				}
@@ -52,7 +52,7 @@ void	find_gap_horizontal(t_img_info *viewport, int *gap, int *count)
 		{
 			if (viewport->grid[y][x + 1].z != viewport->grid[y][x].z)
 			{
-				*gap += abs(viewport->grid[y][x + 1].z
+				*gap += fabs(viewport->grid[y][x + 1].z
 						- viewport->grid[y][x].z);
 				(*count)++;
 			}
@@ -66,9 +66,7 @@ void	iso_trans(t_img_info *viewport, int y, int x, int z_factor)
 {
 	float	z;
 
-	if (!z_factor)
-		z_factor = 1;
-	z = viewport->grid[y][x].z / z_factor;
+	z = viewport->grid[y][x].z / (z_factor + viewport->z_factor_bonus);
 	viewport->grid[y][x].x = (x * cos(ANGLE)
 			+ y * cos(ANGLE + 2) + z * cos(ANGLE - 2));
 	viewport->grid[y][x].y = (x * sin(ANGLE)
@@ -88,7 +86,7 @@ void	iso_convertion(t_img_info *viewport)
 	y = 0;
 	find_gap_horizontal(viewport, &gap, &count);
 	find_gap_vertical(viewport, &gap, &count);
-	z_factor = 0;
+	z_factor = 1;
 	if (count != 0 && gap != 0)
 		z_factor = gap / count;
 	while (viewport->grid[y])

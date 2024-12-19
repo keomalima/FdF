@@ -6,13 +6,13 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 08:20:29 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 11:09:49 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:22:33 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	map_zoom(int keycode, t_img_info *viewport)
+int	ft_map_bonus(int keycode, t_img_info *viewport)
 {
 	mlx_destroy_image(viewport->mlx, viewport->img.img);
 	viewport->img.img = NULL;
@@ -28,6 +28,14 @@ int	map_zoom(int keycode, t_img_info *viewport)
 		viewport->move_y -= 30;
 	if (keycode == 115)
 		viewport->move_y += 30;
+	if (keycode == 122 || keycode == 120)
+	{
+		if (keycode == 120 && (viewport->z_factor_bonus + 1.1) < 20.0)
+			viewport->z_factor_bonus += 1.1;
+		if (keycode == 122 && (viewport->z_factor_bonus - 1.1) >= -20.0)
+				viewport->z_factor_bonus -= 1.1;
+		iso_convertion(viewport);
+	}
 	create_image(viewport);
 	return (0);
 }
@@ -77,10 +85,12 @@ int	key_press(int keycode, t_img_info *viewport)
 	if (keycode == 65307)
 		close_press(viewport);
 	if (keycode == 65451 || keycode == 65453)
-		map_zoom(keycode, viewport);
+		ft_map_bonus(keycode, viewport);
 	else if (keycode == 100 || keycode == 97)
-		map_zoom(keycode, viewport);
+		ft_map_bonus(keycode, viewport);
 	else if (keycode == 119 || keycode == 115)
-		map_zoom(keycode, viewport);
+		ft_map_bonus(keycode, viewport);
+	else if (keycode == 120 || keycode == 122)
+		ft_map_bonus(keycode, viewport);
 	return (0);
 }

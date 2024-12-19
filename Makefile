@@ -6,15 +6,16 @@
 #    By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/11 10:06:37 by kricci-d          #+#    #+#              #
-#    Updated: 2024/12/18 12:39:00 by kricci-d         ###   ########.fr        #
+#    Updated: 2024/12/19 10:44:22 by kricci-d         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -Werror
 SRCS = fdf.c map_parse.c map_len.c image_parse.c scale_offset.c iso_convertion.c hooks.c
-OBJS = $(SRCS:.c=.o)
+OBJS_DIR = objects
+OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:%.c=%.o))
 
 MLX_DIR = ./mlx_linux
 MLX = $(MLX_DIR)/libmlx_Linux.a
@@ -37,18 +38,21 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) $(LIBFT_A)
 LIBFT_FILES = $(addprefix $(LIBFT_DIR)/, $(LIBFT_FUNCTIONS)) $(LIBFT_DIR)/libft.h $(LIBFT_DIR)/Makefile
 
+all: $(OBJS_DIR) $(NAME)
+
 $(NAME): $(OBJS) $(LIBFT_FILES) $(MLX_FILES)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME) -g
 
-all: $(NAME)
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR)
 
-%.o: %.c Makefile fdf.h
+$(OBJS_DIR)/%.o: %.c Makefile fdf.h
 	$(CC) $(CFLAGS) -I . -I $(MLX_DIR) -c $< -o $@
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS_DIR)
 	$(MAKE) clean -C $(MLX_DIR)
 	$(MAKE) clean -C $(LIBFT_DIR)
 

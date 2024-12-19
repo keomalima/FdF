@@ -6,7 +6,7 @@
 /*   By: kricci-d <kricci-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:21:01 by kricci-d          #+#    #+#             */
-/*   Updated: 2024/12/18 10:02:24 by kricci-d         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:32:03 by kricci-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	grid_parse(char *file_name, t_pixel ***grid, t_img_info *viewport)
 	viewport->grid_x_len = x_len;
 	viewport->grid_y_len = y_len;
 	viewport->grid = *grid;
+	viewport->z_factor_bonus = 1;
 	iso_convertion(viewport);
 	return (0);
 }
